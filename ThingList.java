@@ -1,13 +1,39 @@
+import java.util.Random;
 
 public class ThingList {
-    public Thing data;
-    public Node next;
+    private class Node {
+        Thing data;
+        Node next;
 
-    public Node add(Thing newThing) {
-        Node newNode = new Node();
-        newNode.data = newThing;
-        newNode.next = this.next;
-        this.next = newNode;
-        return newNode;
+        Node(Thing t) {
+            data = t;
+            next = null;
+        }
+    }
+
+    private Node head;
+
+    public void addThing(Thing t) {
+        Node newnode = new Node(t);
+        newnode.next = head;
+        head = newnode;
+    }
+
+    public void moveAll(Random rand) {
+        Node current = head;
+
+        while (current != null) {
+            current.data.maybeTurn(rand);
+            current.data.step();
+            current = current.next;
+        }
+    }
+
+    public void printAll() {
+        Node current = head;
+        while (current != null) {
+            System.out.println(current.data.toString());
+            current = current.next;
+        }
     }
 }

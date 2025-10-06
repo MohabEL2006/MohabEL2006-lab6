@@ -1,75 +1,37 @@
-import java.util.Random;
+import java.util.*;
 
-public class Thing extends ThingList {
-  // dir: 0=North, 1=East, 2=South, 3=West.
-  // timeSinceLast: this is only important for "TypeB" Things.
-  public int row, col, dir, timeSinceLast;
-  public char lab = 'r';
-  public boolean isTypeB;
-  public Random rand = new Random(System.currentTimeMillis());
+public abstract class Thing {
+    protected int row, col, dir, timeSinceLast;
+    protected char lab;
+    protected Random rand = new Random();
+    protected boolean isTypeB;
+    protected boolean isTypeC;
 
-  public void MOVEALL(Node L) {
-    for (Node T = L; T != null; T = T.next) {
-      maybeTurn(T.data);
-      step(T.data);
+    public Thing(int row, int col, char lab) {
+        this.row = row;
+        this.col = col;
+        this.lab = lab;
+        this.dir = rand.nextInt(4);
     }
-  }
 
-  public void rightTurn(Thing t) {
-    t.dir = (t.dir + 1) % 4;
-  }
-
-  public void leftTurn(Thing t) {
-    t.dir = (t.dir + 3) % 4;
-  }
-
-  public void maybeTurn(Thing t) {
-    int i = rand.nextInt(3);
-
-    if (t.isTypeB) {
-      t.timeSinceLast++;
-
-      if (t.timeSinceLast == 10) {
-        t.timeSinceLast = 0;
-
-        if (i == 1) {
-          rightTurn(t);
-        }
-
-        if (i == 2) {
-          leftTurn(t);
-        }
-      }
-    } else {
-      if (i == 1) {
-        rightTurn(t);
-      }
-
-      if (i == 2) {
-        leftTurn(t);
-      }
+    public void rightTurn() {
+        dir = (dir + 1) % 4;
     }
-  }
 
-  public void step(Thing t) {
-    final int[] dc = {
-        0, 1, 0, -1
-    }, dr = {
-        1, 0, -1, 0
-    };
-    t.row += dr[t.dir];
-    t.col += dc[t.dir];
-  }
-
-  public void PRINTALL(Node L) {
-    toString(L);
-    System.out.println("done");
-    System.out.flush();
-  }
-
-  public void toString(Node L) {
-    for (Node T = L; T != null; T = T.next) {
-      System.out.println(T.data.row + " " + T.data.col + " " + T.data.lab);
+    public void leftTurn() {
+        dir = (dir + 3) % 4;
     }
-  }
+
+    public void step() {
+        final int[] dc = { 0, 1, 0, -1 };
+        final int[] dr = { -1, 0, 1, 0 };
+        row += dr[dir];
+        col += dc[dir];
+    }
+
+    public abstract void maybeTurn(Random rand);
+
+    public String toString() {
+        return row + " " + col + " " + lab;
+    }
 }

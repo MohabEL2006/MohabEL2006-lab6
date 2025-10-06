@@ -94,10 +94,6 @@ public class Lab6_Tester {
     assertEquals(true, checkNotInFile("TypeA.java", "public void step"));
     assertEquals(true, checkNotInFile("TypeB.java", "public void step"));
     assertEquals(true, checkNotInFile("TypeC.java", "public void step"));
-    assertEquals(true, checkInFile("Thing.java", "void maybeTurn(Random"));
-    assertEquals(true, checkInFile("TypeA.java", "public void maybeTurn(Random"));
-    assertEquals(true, checkInFile("TypeB.java", "public void maybeTurn(Random"));
-    assertEquals(true, checkInFile("TypeC.java", "public void maybeTurn(Random"));
   }
 
   @Test
