@@ -1,3 +1,3 @@
-public class TypeC {
+public class TypeC extends Thing {
     
 }
